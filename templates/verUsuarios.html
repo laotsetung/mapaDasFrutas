@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <link rel="stylesheet" href="../static/css/estilo.css" />
+    <link rel="stylesheet" href="../static/css/dropDown.css" />
+    <link rel="stylesheet" href="../static/css/universal.css" />
+</head>
+
+<!-- CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
+<script>
+    var lat = ""
+    var lon = ""
+
+    {% if usuario %}
+        var userId = {{usuario['id']}}  
+        var usuario = "{{usuario['usuario']}}"
+        var icone = {{usuario['icone']}}
+    {% else %}
+        var userId = undefined
+        var usuario = ""
+        var icone = undefined
+    {% endif %}  
+
+    {% if lat %}
+        lat = {{lat}}
+    {% endif %}
+
+    {% if lon %}
+        lon = {{lon}}
+    {% endif %}
+
+    if (lat == undefined){
+        lat = localStorage.getItem("lat")
+    }
+    if (lon == undefined){
+        lon = localStorage.getItem("lon")
+    }
+
+    listaUsuarios = []
+
+    {% if listaUsers %}
+        {% for u in listaUsers %}
+
+            var id = {{u['id']}}
+            var nome = '{{u['usuario']}}'
+            ar = [id,nome]
+            listaUsuarios.push(ar)
+
+        {% endfor %}
+    {% endif %}
+
+</script>
+
+<body>
+    <!-- CABECALHO -->
+    <script src="../static/js/header.js"></script>
+    <!-- CABECALHO -->
+
+
+    <main style="height: 100%; margin: auto; padding: 0; text-align: center;">
+        <div >
+            <h1 style="color: orange">Lista de Usuarios</h1>
+
+            
+<script>
+    for (var a =0; a< listaUsuarios.length; a++){
+        document.write(`
+        <p><a href="/perfil/${listaUsuarios[a][0]}">${listaUsuarios[a][1]}</a></p>
+        `)
+    }
+</script>
+        </div>
+    </main>
+    
+</body>
+</html>

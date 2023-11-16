@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="static/css/estilo.css">
+    <link rel="stylesheet" href="../static/css/dropDown.css" />
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class="flashes" id="flashMsg" onclick="sumirAviso()">
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+    <style>
+        /* HIDE RADIO */
+        [type=radio] { 
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* IMAGE STYLES */
+        [type=radio] + img {
+            cursor: pointer;
+            border-radius: 42%;
+            width: 66px;
+        }
+
+        [type=radio] + img:hover {
+            cursor: pointer;
+            border-radius: 42%;
+            background-color: aquamarine;
+            width: 66px;
+        }
+
+        /* CHECKED STYLES */
+        [type=radio]:checked + img {
+            outline: 2px solid #f00;
+        }
+
+        .mainContainer {
+            position: absolute;
+            top: 90px;
+            padding-top: 50px; 
+            width: 100%; 
+            
+        }
+
+        .mainDivCadastro {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .mainDivCadastro input {
+            width: 175px;
+        }
+
+    </style>
+</head>
+<script>
+    function sumirAviso(){
+        obj = document.getElementById("flashMsg")
+        if(obj){
+            obj.style.display = 'none';
+        }
+    }
+</script>
+
+<!-- CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
+<script>
+    {% if usuario %}
+    var userId = {{usuario['id']}}  
+    var usuario = "{{usuario['usuario']}}"
+    var icone = {{usuario['icone']}}
+    {% else %}
+    var userId = undefined
+    var usuario = ""
+    var icone = undefined
+    {% endif %}  
+</script>
+
+<script>
+
+    function enviarNovoCadastro(){
+        const usuarioTxt = document.getElementById('usuarioTxt')
+        const senhaTxt = document.getElementById('senhaTxt')
+        const emailTxt = document.getElementById('emailTxt')
+
+        if (usuarioTxt.value.length < 4){
+            // console.log(usuarioTxt.value.length);
+            alert('Usuario deve conter mais de 3 letras!');
+            usuarioTxt.focus();
+            return false;
+        }
+
+        if(senhaTxt.value.length < 6){
+            alert('A senha deve conter no minimo 6 caracteres!');
+            senhaTxt.focus();
+            return false;
+        }
+
+        if(emailTxt.value.length < 10){
+            alert('Email inválido')
+            emailTxt.focus();
+            return false;
+        }
+
+        if(emailTxt.value.indexOf('@') < 0){
+            alert('Email inválido')
+            emailTxt.focus();
+            return false;
+        }
+        return true;
+    }
+
+</script>
+<body>
+    <!-- CABECALHO -->
+    <script src="../static/js/header.js"></script>
+    <!-- CABECALHO -->
+  
+
+  <div class="mainContainer" >
+    <div class="mainDivCadastro">
+        
+    <form action="/cadastrar" method="POST" enctype="multipart/form-data" onsubmit="return (enviarNovoCadastro())">
+        <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+                <td colspan="2" style="text-align: center;">Insira seus dados:<br><br></td>
+            </tr>
+            <!-- Usuario -->
+            <tr>
+                <td><label for="usuarioTxt" style="padding-left: 5px;">Usuario: *</label></td>
+                <td><input type="text" name="usuarioTxt" id="usuarioTxt" required></td>
+            </tr>
+            <!-- Senha -->
+            <tr>
+                <td><label for="senhaTxt" style="padding-left: 5px;">Senha: *</label></td>
+                <td><input type="password" name="senhaTxt" id="senhaTxt" required></td>
+            </tr>
+            <!-- Email -->
+            <tr>
+                <td><label for="emailTxt" style="padding-left: 5px;">E-mail: *</label></td>
+                <td><input type="text" name="emailTxt" id="emailTxt" style="width: 230px; font-size: 16px;" required></td>
+            </tr>
+            <tr>
+                <td><br></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <p>Escolha uma imagem de Perfil *</p>
+
+                    <label>
+                        <input type="radio" name="iconePerfil" value="01" checked>
+                        <img src="../static/imgs/icone_perfil/perfil01.png" alt="" alt="Option 1">
+                    </label>
+                    
+                    <label>
+                        <input type="radio" name="iconePerfil" value="02">
+                        <img src="../static/imgs/icone_perfil/perfil02.png" alt="" alt="Option 2">
+                    </label>
+
+                    <label>
+                        <input type="radio" name="iconePerfil" value="03">
+                        <img src="../static/imgs/icone_perfil/perfil03.png" alt="" alt="Option 3">
+                    </label>
+
+                    </td><tr>
+                    <td colspan="2"  style="text-align: center;">                    
+                    
+                    <label>
+                        <input type="radio" name="iconePerfil" value="04">
+                        <img src="../static/imgs/icone_perfil/perfil04.png" alt="" alt="Option 4">
+                    </label>
+
+                    <label>
+                        <input type="radio" name="iconePerfil" value="05">
+                        <img src="../static/imgs/icone_perfil/perfil05.png" alt="" alt="Option 5">
+                    </label>
+
+                    <label>
+                        <input type="radio" name="iconePerfil" value="06">
+                        <img src="../static/imgs/icone_perfil/perfil06.png" alt="" alt="Option 6">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><br><br></td>
+            </tr>
+            <!-- Data de Nascimento -->
+            <tr>
+                <td><label for="dataNascimento" style="padding-left: 10px;">Data de Nascimento: *</label></td>
+                <td><input type="date" name="dataNascimento" id="dataNascimento" required></td>
+            </tr>
+
+            <!-- Rede Social 1 -->
+            <tr>
+                <td><label for="redeSocial1" style="padding-left: 10px;">Rede Social (1):</label></td>
+                <td><input type="text" name="redeSocial1" id="redeSocial1"></td>
+            </tr>
+            <!-- Rede Social 2 -->
+            <tr>
+                <td><label for="redeSocial2" style="padding-left: 10px;">Rede Social (2):</label></td>
+                <td><input type="text" name="redeSocial2" id="redeSocial2"></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align: center; padding-top: 20px;">
+                    <!-- <button type="button" class="btnEnviar" onclick="enviarNovoCadastro">Enviar</button> -->
+                    <button class="btnEnviar">Cadastrar</button>
+                </td>
+            </tr>
+            <tr>
+                <td><br></td>
+            </tr>
+        </table>
+    </form>
+    </div>  
+</div>
+    
+</body>
+</html>

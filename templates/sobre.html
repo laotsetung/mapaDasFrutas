@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa das Frutas - Sobre</title>
+    <link rel="icon" type="image/x-icon" href="../static/imgs/icones/banana.png">
+    <link rel="stylesheet" href="../static/css/estilo.css" />
+    <link rel="stylesheet" href="../static/css/dropDown.css" />
+    <link rel="stylesheet" href="../static/css/universal.css" />
+</head>
+
+<!-- CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
+<script>
+    var lat = ""
+    var lon = ""
+
+    {% if usuario %}
+    var userId = {{usuario['id']}}  
+    var usuario = "{{usuario['usuario']}}"
+    var icone = {{usuario['icone']}}
+    {% else %}
+    var userId = undefined
+    var usuario = ""
+    var icone = undefined
+    {% endif %}  
+
+    {% if lat %}
+        lat = {{lat}}
+    {% endif %}
+
+    {% if lon %}
+        lon = {{lon}}
+    {% endif %}
+
+    if (lat == undefined){
+        lat = localStorage.getItem("lat")
+    }
+    if (lon == undefined){
+        lon = localStorage.getItem("lon")
+    }
+
+</script>
+
+<body style="overflow-y: visible;">
+    <!-- <script>
+        document.write(`<input type="hidden" id="lat" name="lat" value="${lat}">`);
+        document.write(`<input type="hidden" id="lon" name="lon" value=${lon}>`);
+    </script> -->
+    
+    
+    
+    <!-- CABECALHO -->
+    <script src="../static/js/header.js"></script>
+    <!-- CABECALHO -->
+
+  <!-- INICIO DO MAIN -->
+  <main style="height: 100%; margin: 0; padding: 0;">
+    <div style="width: 90%; margin-left: auto; margin-right: auto; color: var(--corTexto)">
+        <h1 style="color: orange">SOBRE A VIDA</h1>
+
+
+
+        <p style="text-align: justify; font-size: 20px;">De alma 
+            <b>
+                <span style="background-color: lightsalmon;">
+            <span style='color: brown'>A</span>
+            <span style='color: blue'>N</span>
+            <span style='color: yellow'>A</span>
+            <span style='color: green'>R</span>
+            <span style='color: orangered'>Q</span>
+            <span style='color: blue'>U</span>
+            <span style='color: magenta'>I</span>
+            <span style='color: black'>S</span>
+            <span style='color: green'>T</span>
+            <span style='color: blueviolet'>A</span></b></span>
+            , está aplicação distribui vida.<br>
+            Vida abudante no Brasil, mas que escapa nossa atenção e escorre pelos dedos, enquanto estamos distraidos com telas luminosas de nossa geração.
+            <br><br><b><span style='color: brown'>A TERRA</span>,<span style="color: blue;"> A VIDA</span>,<span style="color: green;"> AS PLANTAS</span>,<span style="color: orangered;"> AS FRUTAS</b></span>, estão ai, e raramente nos lembramos delas.
+            Ao OPOSTO dos supermercados (Que não satisfazem meu coração), tudo que ela nos dá é <b>DE GRAÇA!!</b> Nos da de comer e não cobra <b>NADA!!</b><br>
+            Por favor, usem esta ferramente de distribuição livre de alimentos, de emancipação da alimentação saudável, do melhor alimento desta terra, as FRUTAS!!!
+            Comam FRUTAS, Bebam Agua, Cuidem-se e expalhem esta boa nova.
+        </p>
+        <h2 style="color: orange">A parte das ideologias &nbsp;(Sobre Mim)</h2>
+            <p style="text-align: justify; font-size: 20px">Olá, meu nome é Lao, eu sou o programador desta aplicação...
+            sou também artista, e Motoboy, minha atual profissão.<br>
+            Profissão que tenho para defender a vida, pois a realidade está ai e simplesmente atropela nossos ideais. Não importando o que cada um pense, no fim do dia, semana e mês, temos as contas para pagar.<br>
+            Um dia porém um playboy inconsequênte atravessou o sinal vermelho e quebrou minhas duas pernas... e fugiu.<br>
+            Por isso tenho me esforçado a programação, para mudar de profissão.<br>
+            Tudo que eu preciso é um emprego de programador, e este é meu portfolio.<br>
+            Então, usem minha aplicação, expalhem para os outros humanos que você conhece, desativem o adblock :) (coraçãozinho), e se você é da área de TI, manda meu contato para as vagas de programador! :)
+            <br>E aqui estão eles:
+        </p>
+        <p>
+            <br>
+            <div style="font-size: 25px; text-align: center">
+                
+                <a href="https://www.linkedin.com/in/lao-flavio/" target="_blank" style="text-decoration: none;"> 
+                    <img src="../static/imgs/logos/LinkedIn_icon_circle.svg.png" alt="icone linkedin" style="width: 30px;">Linkedin </a><br><br>
+                <a href="https://github.com/laotsetung" target="_blank" style="text-decoration: none;"> 
+                    <img src="../static/imgs/logos/git_hub.png" alt="icone github" style="width: 30px;">GitHub </a><br><br>
+                <a href="mailto:someone@example.com"> flavio.lao@gmail.com </a><br><br>
+                Quer contribuir comigo???<br>
+                PIX:<br><img src="../static/imgs/logos/pix.png" alt="pix" style="width: 33px;"> flavio.lao@gmail.com
+
+                <br><br>
+                <img src="../static/imgs/duas_bag_peq.jpg" alt="Foto Minha Como Motoboy" style="width: 200px;" title="Eu Motoboy, já com a perna de aço!">
+                <br><br>
+            </div>
+            
+        </p>
+    </div>
+  </main>
+  <!-- FIM DO MAIN -->
+    
+</body>
+</html>

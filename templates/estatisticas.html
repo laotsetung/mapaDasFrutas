@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../static/imgs/icones/manga.png">
+    <title>Mapa das Frutas - Estatisticas</title>
+    <link rel="stylesheet" href="../static/css/estilo.css" />
+    <link rel="stylesheet" href="../static/css/dropDown.css" />
+    <link rel="stylesheet" href="../static/css/universal.css" />
+</head>
+
+<!-- CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
+<script>
+    {% if usuario %}
+    var userId = {{usuario['id']}}  
+    var usuario = "{{usuario['usuario']}}"
+    var icone = {{usuario['icone']}}
+    {% else %}
+    var userId = undefined
+    var usuario = ""
+    var icone = undefined
+    {% endif %}  
+
+    var frutasNome = []
+    var frutasId = []
+    var qtdeFrutas = {{qtdeFrutas}}
+
+    {% if frutas %}
+        {% for fruta in frutas %}
+
+            var id = {{fruta[0]}}
+            var nome = '{{fruta[1]}}'
+    
+            frutasNome.push(nome)
+            frutasId.push(id)
+        {% endfor %}
+    {% endif %}  
+
+    var qtdeLocais = {{qtdeLocais}}
+
+</script>
+
+<body>
+    <input type="hidden" id="lat" name="lat" value="{{lat}}">
+    <input type="hidden" id="lon" name="lon" value ={{lon}}>
+    <!-- CABECALHO -->
+    <script src="../static/js/header.js"></script>
+    <!-- CABECALHO -->
+
+  <!-- INICIO DO MAIN -->
+    <main style="height: 100%; margin: auto; padding: 0; text-align: center;">
+        <div >
+            <h1 style="color: orange">ESTATISTICAS</h1>
+
+            <!-- sobre frutas -->
+            <script>
+                document.write(`
+                <p style="font-size: 25px">Neste momento temos: <span style='color: orange'><br><b>${qtdeFrutas}</b></span> Frutas cadastradas,</p>
+                <p style="font-size: 25px">em <span style='color: orange'><b>${qtdeLocais}</b></span> locais inseridos!</p>`)
+
+                // document.write('<table style="width: 100%; font-size: 20px"><tr>')
+                // for (var a = 0; a<frutasNome.length ; a++){
+                //     document.write(`<td style="padding: 5px"> <a href="/verFruta/${frutasId[a]}">${frutasNome[a]} </a></td>`)
+                //     if(a!=0 && (a+1)%5==0){
+                //         // console.log(a)
+                //         document.write('</tr><tr>')
+                //     }
+                // }
+                // document.write('</tr></table>')
+
+                document.write('<div class="estatisticaWrapper">')
+                for (var a = 0; a<frutasNome.length ; a++){
+                    document.write(`<div> <a href="/verFruta/${frutasId[a]}">${frutasNome[a]} </a></div>`)
+                    if(a!=0 && (a+1)%5==0){
+                        // console.log(a)
+                        // document.write('</tr><tr>')
+                    }
+                }
+                document.write('</div>')
+
+            </script>
+            <!-- sobre frutas -->
+            <br>            
+
+        </div>
+    </main>
+    
+
+
+</body>
+</html>

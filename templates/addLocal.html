@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar novo local</title>
+    <link rel="stylesheet" href="static/css/estilo.css">
+    <link rel="stylesheet" href="../static/css/dropDown.css" />
+    <link rel="stylesheet" href="../static/css/universal.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <script>
+
+//CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
+
+    {% if usuario %}
+    var userId = {{usuario['id']}}  
+    var usuario = "{{usuario['usuario']}}"
+    var icone = {{usuario['icone']}}
+    {% else %}
+    var userId = undefined
+    var usuario = ""
+    var icone = undefined
+    {% endif %}  
+
+
+        function enviarNovaFruta(){
+            const idFruta = document.getElementById('idFruta').value;
+            console.log(idFruta)
+            const nomeFruta = document.getElementById('idFruta').options[idFruta-1].text;
+
+            if (nomeFruta == "" || nomeFruta == undefined || nomeFruta == null){
+                alert('Escolha uma fruta!');
+                return false;
+            }
+
+            if (confirm("Você tem certeza que a localização está correta? E que a fruta correta foi selecionada?")){
+                document.forms[0].submit()
+            }else{
+                return false;
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <!-- CABECALHO -->
+    <script src="../static/js/header.js"></script>
+    <!-- CABECALHO -->
+
+    <main style="height: 100vh; margin: 0; padding: 0; text-align: center; width: 100%;">
+        <div style="position: relative; padding-top: 30px; padding-bottom: 30px; text-align: center; width: 100%; font-size: 30px; font-weight: bold;">Adicionar uma Fruta</div>
+        <div id="map" style="height: 350px; width: 350px; position: relative; margin-left: auto; margin-right: auto; z-index: 3;"></div>
+
+        <div id="main" class="addLocalMain">     
+            <span>Verifique se o local está correto.</span>   
+            <button onclick="window.location.reload()" style="padding: 5px; margin-bottom: 10px; margin-top: 5px;">(Atualizar Localização)</button>
+            <form action="/local" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="lat" id="lat">
+                <input type="hidden" name="lon" id="lon">
+                <table>
+                    <tr>
+                        <td style="width: 150px;"><label for="fruta" style="font-size: 25px;">Fruta:</label> </td>
+                        <td>
+                            <select name="idFruta" id="idFruta" required style="font-size: 25px;">
+                                {% for item in frutas %}
+                                <option value="{{item[0]}}""> {{item[1]}}</option>
+                            {% endfor %}
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr><td colspan="2" style="text-align: center;"><br>
+                        <button type="button" onclick="enviarNovaFruta()" class="btnEnviar">Enviar</button>
+                    </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+            
+    </main>
+</body>
+<script src="static/js/getLocation.js"></script>
+<script>getLocation()</script>
+<script src="../static/js/mapaAdicionaLocal.js"></script>
+<script>setTimeout(carregaMapa,3000)</script>
+</html>

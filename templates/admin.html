@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin</title>
+</head>
+<script>
+    pontos = []
+      {% for marker in markers %}
+      
+        var id = {{marker['id']}}
+        var l1 = {{marker['lat']}}
+        var l2 = {{marker['lon']}}
+        var p1 = '{{marker['nome']}}'
+        ar = [id,l1,l2,p1]
+        pontos.push(ar)
+      {% endfor %}
+</script>
+<style>
+    table tr td {
+        width: 250px;
+    }
+</style>
+<body>
+
+    <a href="/">MAIN PAGE </a>
+    <table>
+<tr><td>ID</td><td>LATITUDE</td><td>LONGITUDE</td><td>NOME FRUTA</td></tr>
+
+<script>
+    
+    for(var a = 0; a<pontos.length; a++){
+        document.write('<tr>')
+        document.write('<td>'+pontos[a][0]+'</td>')
+        document.write('<td>'+pontos[a][1]+'</td>')
+        document.write('<td>'+pontos[a][2]+'</td>')
+        document.write('<td>'+pontos[a][3]+'</td>')
+        document.write("<td><a href='/deletar/"+pontos[a][0]+"'>DELETAR</a></td>")
+        document.write('</tr>')
+    }
+    
+</script>
+    </table>
+    
+</body>
+</html>

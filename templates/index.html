@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <title>Mapa das Frutas</title>
+  <link rel="icon" type="image/x-icon" href="../static/imgs/icones/abacate.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../static/css/estilo.css" />
+  <link rel="stylesheet" href="../static/css/dropDown.css" />
+  <link rel="stylesheet" href="../static/css/universal.css" />
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class="flashes" id="flashMsg">
+      {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+</head>
+
+<!-- CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
+<script>
+  {% if usuario %}
+  var userId = {{usuario['id']}}  
+  var usuario = "{{usuario['usuario']}}"
+  var icone = {{usuario['icone']}}
+  {% else %}
+  var userId = undefined
+  var usuario = ""
+  var icone = undefined
+  {% endif %}  
+
+  {% if lat %}
+        lat = {{lat}}
+    {% endif %}
+
+    {% if lon %}
+        lon = {{lon}}
+    {% endif %}
+
+    if (lat == undefined){
+        lat = localStorage.getItem("lat")
+    }
+    if (lon == undefined){
+        lon = localStorage.getItem("lon")
+    }
+    
+</script>
+
+<body>
+  <input type="hidden" id="lat" name="lat" value="{{lat}}">
+  <input type="hidden" id="lon" name="lon" value ={{lon}}>
+
+  <!-- CABECALHO -->
+  <script src="../static/js/header.js"></script>
+  <!-- CABECALHO -->
+
+
+  <!-- INICIO DO MAIN -->
+  <main style="height: 100%; margin: 0; padding: 0;">
+    <div id="mapMae" class="mapMae">
+      <div id="map">
+        <div id="carregando" class="carregando"> CARREGANDO </div>
+      </div>
+    </div>
+  </main>
+  <!-- FIM DO MAIN -->
+
+  <!-- <script src="../static/js/getLocation.js" /></script> 
+  <script>getLocation()</script> -->
+  <script src="../static/js/universal.js" /></script> 
+
+  <script>
+  // Este código vai pegar os pontos (latitude e longitude) vindos do Python (utilizando Jinja) e colocalos em uma variavel JS
+  pontos = []
+
+  {% if markers %}
+    {% for marker in markers %}
+
+      var l1 = {{marker['lat']}}
+      var l2 = {{marker['lon']}}
+      var p1 = '{{marker['popup']}}'
+      var id = {{marker['id']}}
+      ar = [l1,l2,p1,id]
+      pontos.push(ar)
+
+    {% endfor %}
+  {% endif %}
+
+  console.log(pontos)
+  
+  // Com os pontos (lat, long) inseridos na array pontos, carrego então o MAPA
+  setTimeout(carregaMapa, 2000)
+
+  function escondeFlash(){
+    obj = document.getElementById("flashMsg")
+    if(obj){
+      obj.style.display = 'none';
+    }
+  }
+
+  setTimeout(escondeFlash, 2000)
+
+</script>  
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Cadastro</title>
+    <link rel="stylesheet" href="static/css/estilo.css">
+    <link rel="stylesheet" href="../static/css/dropDown.css" />
+    <!-- <link href="../static/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="../static/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="../static/js/popper.min.js"></script> -->
+
+
+</head>
+<body>
+  <!-- CABECALHO -->
+  <script src="../static/js/header.js"></script>
+  <!-- CABECALHO -->
+
+  <!-- INICIO MAIN -->
+  <div class="mainDiv" style="width: 100%; margin-top: 100px;">
+      <table style="width: 500px; margin-left: auto; margin-right: auto;"> 
+          <tr style="width: 100%;">
+              <td>
+                  <div style="text-align: center;">
+                      <p>Logar</p>
+                      <form action="/login" method="post" enctype="multipart/form-data">
+                          <table style="width: 100%; text-align: center;">
+                              <tr>
+                                  <td><label for="usuario">Usuario:</label></td>
+                                  <td><input type="text" name="usuario" id="usuario"></td>
+                              </tr>
+                              <tr>
+                                  <td><label for="senha">Senha</label></td>
+                                  <td><input type="password" name="senha" id="senha"></td>
+                              </tr>
+                              <tr>
+                                  <td colspan="2">
+                                      <button class="btnEnviar">Logar</button>
+                                  </td>
+                              </tr>
+
+                          </table>
+
+                      </form>
+                  
+                  </div>
+              </td>
+          </tr>
+          <tr>
+              <td style="width: 100%;">
+                  <div style="margin-top: 100px; text-align: center;">
+                  <p>Ainda não tem conta?</p>
+                      <button type="button" class="btn btn-primary btn-lg">Crie Uma Conta</button>
+                  </div>
+              </td>
+          </tr>
+      </table>
+
+  </div>
+
+  <!-- FIM MAIN -->
+    
+</body>
+</html>

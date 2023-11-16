@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa das Frutas - Sobre</title>
+    <link rel="icon" type="image/x-icon" href="../static/imgs/icones/limao.png">
+    <link rel="stylesheet" href="../static/css/estilo.css" />
+    <link rel="stylesheet" href="../static/css/dropDown.css" />
+    <link rel="stylesheet" href="../static/css/universal.css" />
+</head>
+
+<!-- CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
+<script>
+    {% if usuario %}
+    var userId = {{usuario['id']}}  
+    var usuario = "{{usuario['usuario']}}"
+    var icone = {{usuario['icone']}}
+    {% else %}
+    var userId = undefined
+    var usuario = ""
+    var icone = undefined
+    {% endif %}  
+
+    // var fruta = []
+    // {% if fruta %}
+    //   fruta.push({{fruta[0]}})
+    //   fruta.push({{fruta[1]}})
+    //   fruta.push({{fruta[2]}})
+    //   fruta.push({{fruta[3]}})
+
+    // {% endif %}
+
+    // console.log(fruta)
+
+    
+
+    // console.log(meses)
+    // var meses = '{{meses}}'
+    // console.log(meses2)
+    // console.log(mes)
+    function removeAcento (text)
+{       
+    text = text.toLowerCase();                                                         
+    text = text.replace(new RegExp('[ÁÀÂÃ]','gi'), 'a');
+    text = text.replace(new RegExp('[ÉÈÊ]','gi'), 'e');
+    text = text.replace(new RegExp('[ÍÌÎ]','gi'), 'i');
+    text = text.replace(new RegExp('[ÓÒÔÕ]','gi'), 'o');
+    text = text.replace(new RegExp('[ÚÙÛ]','gi'), 'u');
+    text = text.replace(new RegExp('[Ç]','gi'), 'c');
+    text = text.replace(' ','_')
+    return text;                 
+}
+</script>
+
+<body>
+    <!-- CABECALHO -->
+    <script src="../static/js/header.js"></script>
+    <!-- CABECALHO -->
+    <input type="hidden" id="lat" name="lat" value="{{lat}}">
+    <input type="hidden" id="lon" name="lon" value ={{lon}}>
+
+  <!-- INICIO DO MAIN -->
+
+  <main style="height: 100%; margin: 0; padding: 0;">
+    <div style="width: 90%; margin-left: auto; margin-right: auto; color: var(--corTexto)">
+        <h1 style="color: orange">{{nomeFruta}}!</h1>
+
+
+<script>
+  var nome = '{{nomeFruta}}'
+  nomeFruta = removeAcento(nome); //nome.toLowerCase();
+  
+  document.write(`<img src="../static/imgs/icones/${nomeFruta}.png" alt="">`)
+</script>
+        <p style="font-size: 20px; text-align: justify;">
+          {{descricao}}
+        </p>
+        <br>
+        <h2>Meses de colheita : </h2>
+        <table style="width: 100%; text-align: center;">
+
+        <script>
+          var nomeMes = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+          
+          
+            var meses2 = {{meses}}
+            console.log(meses2)
+            for(var a = 0; a<12; a++){
+              if (a == 0){
+                document.write('<tr>');
+              }
+              if (meses2[a] == 1){
+                document.write('<td class="mesQueTem">'+nomeMes[a]+'</td>')
+              }else{
+                document.write('<td class="mesNaoTem"> --- </td>')
+              }
+              
+              if (a == 3 || a == 7){
+                document.write('</tr><tr>');
+              }
+
+              // document.write(meses2[a])
+              // document.write('</td>')
+            }
+            document.write('</tr></table>')
+            
+          // console.log(meses.length)
+          // for (var a = 0 ; a < meses.length; a++){
+          //   document.write(a)
+          // }
+          
+        </script>
+        </tr>
+        </table>
+        <br><br>        
+
+    </div>
+  </main>
+  <!-- FIM DO MAIN -->
+    
+</body>
+</html>
