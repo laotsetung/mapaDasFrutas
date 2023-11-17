@@ -6,10 +6,48 @@
     <title>Login / Cadastro</title>
     <link rel="stylesheet" href="static/css/estilo.css">
     <link rel="stylesheet" href="../static/css/dropDown.css" />
-    <!-- <link href="../static/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <script src="../static/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="../static/js/popper.min.js"></script> -->
+    <script src="../static/js/base.js"></script>
 
+    <!-- MENSAGEM FLASH/FLASK -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes" id="flashMsg" onclick="sumirAviso()">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <!-- MENSAGEM FLASH/FLASK -->
+
+<!-- CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
+<script>
+    {% if usuario %}
+    var userId = {{usuario['id']}}  
+    var usuario = "{{usuario['usuario']}}"
+    var icone = {{usuario['icone']}}
+    {% else %}
+    var userId = undefined
+    var usuario = ""
+    var icone = undefined
+    {% endif %}  
+  
+    {% if lat %}
+          lat = {{lat}}
+      {% endif %}
+  
+      {% if lon %}
+          lon = {{lon}}
+      {% endif %}
+  
+      if (lat == undefined){
+          lat = localStorage.getItem("lat")
+      }
+      if (lon == undefined){
+          lon = localStorage.getItem("lon")
+      }
+      
+  </script>
 
 </head>
 <body>
@@ -19,7 +57,7 @@
 
   <!-- INICIO MAIN -->
   <div class="mainDiv" style="width: 100%; margin-top: 100px;">
-      <table style="width: 500px; margin-left: auto; margin-right: auto;"> 
+      <table style="margin-left: auto; margin-right: auto;"> 
           <tr style="width: 100%;">
               <td>
                   <div style="text-align: center;">
@@ -27,15 +65,15 @@
                       <form action="/login" method="post" enctype="multipart/form-data">
                           <table style="width: 100%; text-align: center;">
                               <tr>
-                                  <td><label for="usuario">Usuario:</label></td>
-                                  <td><input type="text" name="usuario" id="usuario"></td>
+                                  <td style="text-align: left; padding-right: 20px;"><label for="usuario">Usuario:</label></td>
+                                  <td><input type="text" name="usuario" id="usuario" style="width: 150px;"></td>
                               </tr>
                               <tr>
-                                  <td><label for="senha">Senha</label></td>
-                                  <td><input type="password" name="senha" id="senha"></td>
+                                  <td style="text-align: left;"><label for="senha">Senha:</label></td>
+                                  <td><input type="password" name="senha" id="senha" style="width: 150px;"></td>
                               </tr>
                               <tr>
-                                  <td colspan="2">
+                                  <td colspan="2" style="padding-top: 20px;">
                                       <button class="btnEnviar">Logar</button>
                                   </td>
                               </tr>
@@ -49,9 +87,9 @@
           </tr>
           <tr>
               <td style="width: 100%;">
-                  <div style="margin-top: 100px; text-align: center;">
+                  <div style="margin-top: 50px; text-align: center;">
                   <p>Ainda não tem conta?</p>
-                      <button type="button" class="btn btn-primary btn-lg">Crie Uma Conta</button>
+                      <button type="button" class="btnEnviar" onclick="window.location.href='/cadastrar';">Criar Conta</button>
                   </div>
               </td>
           </tr>

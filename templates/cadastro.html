@@ -6,6 +6,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="static/css/estilo.css">
     <link rel="stylesheet" href="../static/css/dropDown.css" />
+    <script src="../static/js/base.js"></script>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -66,14 +67,6 @@
 
     </style>
 </head>
-<script>
-    function sumirAviso(){
-        obj = document.getElementById("flashMsg")
-        if(obj){
-            obj.style.display = 'none';
-        }
-    }
-</script>
 
 <!-- CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
 <script>
@@ -135,12 +128,12 @@
     <form action="/cadastrar" method="POST" enctype="multipart/form-data" onsubmit="return (enviarNovoCadastro())">
         <table style="margin-left: auto; margin-right: auto;">
             <tr>
-                <td colspan="2" style="text-align: center;">Insira seus dados:<br><br></td>
+                <td colspan="2" style="text-align: center; font-size: 22px;">Insira seus dados:<br><br></td>
             </tr>
             <!-- Usuario -->
             <tr>
-                <td><label for="usuarioTxt" style="padding-left: 5px;">Usuario: *</label></td>
-                <td><input type="text" name="usuarioTxt" id="usuarioTxt" required></td>
+                <td style="width: 100px;"><label for="usuarioTxt" style="padding-left: 5px;">Usuario: *</label></td>
+                <td style="text-align: left;"><input type="text" name="usuarioTxt" id="usuarioTxt" required></td>
             </tr>
             <!-- Senha -->
             <tr>
@@ -150,8 +143,14 @@
             <!-- Email -->
             <tr>
                 <td><label for="emailTxt" style="padding-left: 5px;">E-mail: *</label></td>
-                <td><input type="text" name="emailTxt" id="emailTxt" style="width: 230px; font-size: 16px;" required></td>
+                <td><input type="text" name="emailTxt" id="emailTxt" style="width: 210px; font-size: 16px;" required></td>
             </tr>
+            <!-- Data de Nascimento -->
+            <tr>
+                <td><label for="dataNascimento" style="padding-left: 1px; font-size: 16px;">Data de Nascimento: *</label></td>
+                <td><input type="date" name="dataNascimento" id="dataNascimento" required></td>
+            </tr>
+
             <tr>
                 <td><br></td>
             </tr>
@@ -196,11 +195,7 @@
             <tr>
                 <td colspan="2"><br><br></td>
             </tr>
-            <!-- Data de Nascimento -->
-            <tr>
-                <td><label for="dataNascimento" style="padding-left: 10px;">Data de Nascimento: *</label></td>
-                <td><input type="date" name="dataNascimento" id="dataNascimento" required></td>
-            </tr>
+
 
             <!-- Rede Social 1 -->
             <tr>

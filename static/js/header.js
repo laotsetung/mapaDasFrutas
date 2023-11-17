@@ -36,7 +36,7 @@ document.write(`<td style="width: 25%; text-align: center;">
                 if(usuario != ""){
                     document.write(`<a href="/local">Nova Fruta</a>`);
                 }else{
-                    document.write(`<span style='text-decoration: line-through; font-size: 24px' title='Fazer Login Para Adicionar'> Nova Fruta</span>`);
+                    document.write(`<span style='text-decoration: line-through; font-size: 24px' title='Fazer Login Para Adicionar'>Nova Fruta</span>`);
                 }
                 
                 document.write(`

@@ -24,6 +24,16 @@ def carregaUser():
     else:
         return None
   
+def limpaString(texto):
+    caracteresTortos = ("'","=",'"',"´","`",",",";","%","¨","&","*","!","(",")","[","]","{","}","º","ª")
+
+    for c in caracteresTortos:
+        if c in texto:
+            return False
+        else:
+            return True
+
+    
 # @rotas.route('/locais')
 # def getLocais():
 #     locais = localModel()
@@ -43,8 +53,8 @@ def main():
     print("ROTA / ")
         
     ip = request.remote_addr
-    with open("lista_ip.txt", "a") as file1:
-        file1.write(f"\nrota:/ | ip: {ip} | {datetime.datetime.now()}")
+    with open("log.txt", "a") as file1:
+        file1.write(f"\n{ip} | {datetime.datetime.now()}")
 
     return render_template('getLocation.html')
 
@@ -80,19 +90,6 @@ def mapa():
                 return render_template('index.html', markers=res, lat=lat, lon=lon, usuario=usuario)
             else:
                return render_template('getLocation.html')
-    #ip = request.remote_addr
-    #with open("lista_ip.txt", "a") as file1:
-    #    file1.write(f"\n{ip} - {datetime.datetime.now()}")
-
-    # print(f"lat: {lat} ; lon: {lon}")
-    # lat = float(lat)
-    # lon = float(lon)
-    # lat -= 1
-    # lon -= 1
-    # print(f"lat: {lat} ; lon: {lon}")
-
-
-    #return url_for('/mapa', markers=res, lat=lat, lon=lon)
 
 @rotas.route('/local', methods=['POST','GET'])
 @login_required
@@ -142,21 +139,22 @@ def login():
         nomeUsuario = request.form['usuario']
         senha = request.form['senha']
 
-        usuario = usuarioModel(nomeUsuario,senha)
-        
-        if(usuario.verificaLogin()):
-            login_user(usuario)
-            print("!!!USUARIO LOGADO!!!")
-            #return render_template('/getLocation.html')
-            #return redirect(url_for("main"))
-            flash("Login realizado com sucesso!","ok")
-            return redirect("/")
-            #return render_template('/getLocation.html')
+        if limpaString(nomeUsuario) or limpaString(senha):
+            usuario = usuarioModel(nomeUsuario,senha)
+            
+            if(usuario.verificaLogin()):
+                login_user(usuario)
+                print("!!!USUARIO LOGADO!!!")
+                flash("Login realizado com sucesso!","ok")
+                return redirect("/")
+            else:
+                #SE O USUARIO NAO ESTA LOGADO VAI PARA A PAGINA DE LOGIN
+                flash("Usuario ou Senha Inválidos!", "erro")
+                return render_template('login.html')
+                #SE O USUARIO ESTIVER LOGADO, VAI PARA A PAGINA DE STATUS DA CONTA
         else:
-            print("Usuario Invalido")
-            #SE O USUARIO NAO ESTA LOGADO VAI PARA A PAGINA DE LOGIN
-            return render_template('login.html')
-            #SE O USUARIO ESTIVER LOGADO, VAI PARA A PAGINA DE STATUS DA CONTA
+            flash("Usuario ou Senha com Caracteres Inválidos!", "erro")
+            return render_template('login.html')    
     else:
         return render_template('login.html')
 
@@ -176,11 +174,11 @@ def cadastrar():
                              request.form['redeSocial1'],request.form['redeSocial2'],0,0,0)
             
             usuarioM.inserirNoBanco()
-            flash("Usuario Cadastrado com sucesso, você já pode fazer Login!", "ok")
+            flash("Usuario Cadastrado com sucesso!!", "ok")
             #return render_template('index.html')
             return redirect("/")
         else:
-            flash("Já existe um Usuario com este Nome ou Email, por favor escolha outro.","error")
+            flash("Usuario ou Email já cadastrado!","erro")
             return render_template("cadastro.html")
         
         #return render_template('cadastro.html')
@@ -206,8 +204,7 @@ def rotaErro():
 @login_required
 def logout():
     logout_user()
-    #return redirect(url_for("rotaErro"))
-    print("USUARIO OUT")
+    flash("Logout!","ok")
     return render_template('getLocation.html')
 
 @rotas.route("/perfil/<id>")
@@ -306,6 +303,7 @@ def estacao(val):
     lat = valores[0]
     lon = valores[1]
     if lat == "" or lon == "":
+        flash("Erro ao recuperar Localização, Recarregando..", "erro")
         return render_template('getLocation.html')
     else:
         locais = localModel()

@@ -9,8 +9,8 @@ class localModel:
         pass
 
     def novoLocal(self, lat, lon, idFruta, idUser):
-        self.lat = lat
-        self.lon = lon
+        self.lat = lat[0:10]
+        self.lon = lon[0:10]
         self.idFruta = idFruta
         self.idUser = idUser
 

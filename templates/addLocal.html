@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar novo local</title>
+    <title>Adicionar nova Fruta</title>
     <link rel="stylesheet" href="static/css/estilo.css">
     <link rel="stylesheet" href="../static/css/dropDown.css" />
     <link rel="stylesheet" href="../static/css/universal.css" />
@@ -53,8 +53,8 @@
     <!-- CABECALHO -->
 
     <main style="height: 100vh; margin: 0; padding: 0; text-align: center; width: 100%;">
-        <div style="position: relative; padding-top: 30px; padding-bottom: 30px; text-align: center; width: 100%; font-size: 30px; font-weight: bold;">Adicionar uma Fruta</div>
-        <div id="map" style="height: 350px; width: 350px; position: relative; margin-left: auto; margin-right: auto; z-index: 3;"></div>
+        <div style="position: relative; padding-top: 20px; padding-bottom: 30px; text-align: center; width: 100%; font-size: 25px; font-weight: bold;">Adicionar uma Fruta</div>
+        <div id="map" style="height: 250px; width: 300px; position: relative; margin-left: auto; margin-right: auto; z-index: 3;"></div>
 
         <div id="main" class="addLocalMain">     
             <span>Verifique se o local está correto.</span>   
@@ -62,11 +62,11 @@
             <form action="/local" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="lat" id="lat">
                 <input type="hidden" name="lon" id="lon">
-                <table>
+                <table style="width: 100%;">
                     <tr>
-                        <td style="width: 150px;"><label for="fruta" style="font-size: 25px;">Fruta:</label> </td>
+                        <td><label for="fruta" style="font-size: 22px;">Fruta:</label> </td>
                         <td>
-                            <select name="idFruta" id="idFruta" required style="font-size: 25px;">
+                            <select name="idFruta" id="idFruta" required style="font-size: 20px;">
                                 {% for item in frutas %}
                                 <option value="{{item[0]}}""> {{item[1]}}</option>
                             {% endfor %}
