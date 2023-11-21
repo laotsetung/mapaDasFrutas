@@ -54,7 +54,8 @@
 
     <main style="height: 100vh; margin: 0; padding: 0; text-align: center; width: 100%;">
         <div style="position: relative; padding-top: 20px; padding-bottom: 30px; text-align: center; width: 100%; font-size: 25px; font-weight: bold;">Adicionar uma Fruta</div>
-        <div id="map" style="height: 250px; width: 300px; position: relative; margin-left: auto; margin-right: auto; z-index: 3;"></div>
+        <div id="map" style="height: 250px; width: 300px; position: relative; margin-left: auto; margin-right: auto; z-index: 3;">
+        Carregando Mapa...</div>
 
         <div id="main" class="addLocalMain">     
             <span>Verifique se o local está correto.</span>   
@@ -84,8 +85,23 @@
             
     </main>
 </body>
-<script src="static/js/getLocation.js"></script>
-<script>getLocation()</script>
+<script>
+    //PEGAR A POSIÇÃO
+    function showPosition(position) {
+      localStorage.setItem("lat",position.coords.latitude)
+      localStorage.setItem("lon",position.coords.longitude)
+
+      document.getElementById('lat').value = position.coords.latitude;
+      document.getElementById('lon').value = position.coords.longitude;
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+
+</script>
+<!-- <script src="static/js/getLocation.js"></script>
+<script>getLocation()</script> -->
 <script src="../static/js/mapaAdicionaLocal.js"></script>
-<script>setTimeout(carregaMapa,3000)</script>
+<script>setTimeout(carregaMapa,2000)</script>
 </html>

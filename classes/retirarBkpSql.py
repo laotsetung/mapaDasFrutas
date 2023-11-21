@@ -1,3 +1,4 @@
+import hashlib
 from conexao import conexao
 
 c = conexao()
@@ -5,7 +6,28 @@ c = conexao()
 cur = c.cur
 
 #seleciona todas as frutas
-# sql = "SELECT * FROM fruta ORDER BY nomeFruta"
+#sql = "SELECT * FROM frutas WHERE nomeFruta = 'Caju'"
+#cur.execute(sql)
+#r = cur.fetchall()
+
+# sql2 = "UPDATE frutas SET estacao = '01-08-09-10-11-12' WHERE nomeFruta = 'Caju'"
+# cur.execute(sql2)
+# c.con.commit()
+senha = 'quake190'
+hash_object = hashlib.sha256()
+
+#Converte o password para Byte e encoda
+hash_object.update(senha.encode())
+
+#Pega o valor hex do metodo hash
+hash_password = hash_object.hexdigest()
+
+sql = f"UPDATE usuarios SET senha = '{hash_password}', qtdeInsert = 24 WHERE idUser = 1"
+print(sql)
+cur.execute(sql)
+c.comita()
+c.close()
+#print(r)
 
 # cur.execute(sql)
 # res = cur.fetchall()
@@ -29,7 +51,7 @@ cur = c.cur
 # lao = """INSERT INTO usuarios (usuario, senha, email, icone, dataNascimento, dataInsert, qtdeInsert)
 #         VALUES ('Lao','quake190!','flavio.lao@gmail.com',1,'19870123','20230903',13)"""
 
-sql = "UPDATE usuarios SET icone = 2 WHERE idUser = 1"
+"""sql = "UPDATE usuarios SET icone = 2 WHERE idUser = 1"
 
 cur.execute(sql)
 c.con.commit()
@@ -39,7 +61,7 @@ cur.execute(sql)
 res = cur.fetchall()
 print(res)
 for r in res:
-    print(r)
+    print(r)"""
 #(13, '-22.745646', '-47.626441', 'Siriguela', '', 'ATIVO')
 
 # bkpLocais = []
@@ -51,4 +73,4 @@ for r in res:
 # for a in bkpLocais:
 #     print(a)
     
-c.close()
+#c.close()

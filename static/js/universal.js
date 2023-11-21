@@ -12,8 +12,8 @@ function removeAcento (text){
 
 function carregaMapa(){
 
-    var lat = document.getElementById('lat').value
-    var lon = document.getElementById('lon').value
+    var lat = window.localStorage.getItem("lat")//document.getElementById('lat').value
+    var lon = window.localStorage.getItem("lon")//document.getElementById('lon').value
 
     if(lat == '' || lon == ''){
         lat = -22.728619

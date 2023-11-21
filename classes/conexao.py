@@ -17,5 +17,8 @@ class conexao:
             self.con.close()
             print("Erro ao conectar na database.")
 
+    def comita(self):
+        self.con.commit()
+
     def close(self):
         self.con.close()

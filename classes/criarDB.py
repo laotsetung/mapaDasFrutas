@@ -15,7 +15,8 @@ tabelaFrutas = """CREATE TABLE frutas(
 )"""
 
 cur.execute(tabelaFrutas)
-con.commit()
+c.comita()
+#con.commit()
 
 #ABACATE
 cur.execute("""INSERT INTO frutas (nomeFruta, estacao, descricao) 
@@ -78,7 +79,7 @@ cur.execute("""INSERT INTO frutas (nomeFruta, estacao, descricao) VALUES('Cacau'
 #con.commit()
 
 #CAJU
-cur.execute("""INSERT INTO frutas (nomeFruta, estacao, descricao) VALUES('Caju','',
+cur.execute("""INSERT INTO frutas (nomeFruta, estacao, descricao) VALUES('Caju','01-08-09-10-11-12',
             'O que entendemos popularmente como "caju" se constitui de duas partes: o fruto propriamente dito, que é a <b>castanha</b>; e seu pedúnculo floral, o pseudofruto, um corpo piriforme, amarelo, rosado ou vermelho;
             O pseudofruto, é suculento e rico em vitamina C e ferro;
             Além de auxiliar na cicatrização de feridas e combate a infecções e inflamações, previne a anemia. Outros minerais encontrados na polpa são o cálcio - que fortalece os ossos do corpo. O fósforo - que participa do metabolismo de micronutrientes do corpo, e o cobre - que melhora a saúde da pele e dos cabelos.')""")
@@ -173,7 +174,7 @@ cur.execute("""INSERT INTO frutas (nomeFruta, estacao, descricao) VALUES('Maça'
 
 #Mamão
 cur.execute("""INSERT INTO frutas (nomeFruta, estacao, descricao) VALUES('Mamão','01-02-03-10-11-12',
-            '"O mamão é uma fruta muito nutritiva, fonte de minerais e antioxidantes, além de excelente fonte de cálcio;
+            'O mamão é uma fruta muito nutritiva, fonte de minerais e antioxidantes, além de excelente fonte de cálcio;
             Possui vitamina A, que auxilia a saúde da pele e da visão; e vitamina C, que fortalece o sistema imunológico. É rico em fibras, o que melhora o funcionamento intestinal, e suas sementes são ricas em carpaína, uma substância que possui ação anti-inflamatória.')""")
 #con.commit()
 

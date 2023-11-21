@@ -21,3 +21,21 @@ class dataManipulation:
     def colocaBarras(dataStr):
         res = dataStr[0:4]+'/'+dataStr[4:6]+'/'+dataStr[-2:]
         return res
+
+    def montaMeses(self,meses):
+        mesesArray = meses.split('-')
+        mesesArrayInt = []
+        for mes in mesesArray:
+            mesesArrayInt.append(int(mes))
+
+        resultado = []
+        for a in range(1,13):
+            b = int('0'+str(a)) if (a<10) else a
+
+            if b in mesesArrayInt:
+                resultado.append(1)
+            else:
+                resultado.append(0)
+
+        print(resultado)
+        return resultado

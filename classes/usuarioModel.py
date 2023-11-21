@@ -1,5 +1,4 @@
-import datetime
-import hashlib
+from classes.Criptografia import Criptografia
 from classes.conexao import conexao
 from classes.dataManipulation import dataManipulation
 
@@ -23,7 +22,7 @@ class usuarioModel:
             # print('aqi')
             self.id = idUser
             self.usuario = res[0][2]
-            self.senha = res[0][3]
+            self.senha = Criptografia().encryptar(res[0][3])
             self.email = res[0][4]
             self.icone = res[0][5]
             self.dataNasc = res[0][6]
@@ -39,12 +38,14 @@ class usuarioModel:
     def __init__(self, usuario = '', senha = ''):
         # self.id = idUser
         self.usuario = usuario
-        self.senha = senha
+        if(senha != ''):
+            self.senha = Criptografia().encryptar(senha)
 
     def set_all(self, usuario, senha, email, icone, dataNasc, redeS1, redeS2, qtIns,qtConf,qtRej):
         # self.id = idUser
         self.usuario = usuario
-        self.senha = senha
+
+        self.senha = Criptografia().encryptar(senha)
         self.email = email
         self.icone = icone
 
@@ -54,9 +55,8 @@ class usuarioModel:
         self.dataNasc = dtnStr#dataNasc
         self.redeSocial1 = redeS1
         self.redeSocial2 = redeS2
-        d = datetime.datetime.now()
-        hoje = str(d.strftime("%Y%m%d"))
-        self.dataInsert = hoje
+
+        self.dataInsert = dataManipulation().dataHoje()
         self.qtdeInsert = qtIns
         self.qtdeConfirmacao = qtConf
         self.qtdeRejeito = qtRej
@@ -81,7 +81,6 @@ class usuarioModel:
                     'qtdeConfirmacao':self.qtdeConfirmacao,'qtdeRejeito':self.qtdeRejeito}
         return resposta
 
-
     #Classes necessarias para usar o flask login 
     @property
     def is_authenticated(self):
@@ -96,8 +95,6 @@ class usuarioModel:
     @property
     def is_anonymous(self):
         return False
-    
-
     
     def set_email(self, email):
         self.email = email
@@ -130,7 +127,7 @@ class usuarioModel:
         cur=c.cur
 
         sql = f"SELECT COUNT(idUser), * FROM usuarios WHERE usuario = '{self.usuario}' AND senha = '{self.senha}'"
-        #print(sql)
+        print(sql)
         cur.execute(sql)
         res = cur.fetchall()
         print(res)
@@ -160,21 +157,20 @@ class usuarioModel:
             return False
 
     def inserirNoBanco(self):
-        #c = conexao()
-        #cur=c.cur
+        try:
+            c = conexao()
+            cur=c.cur
 
-        hash_object = hashlib.sha256()
-    
-        #Converte o password para Byte e encoda
-        hash_object.update(self.senha.encode())
+            sql = f"""INSERT INTO usuarios (usuario, senha, email, icone, dataNascimento, dataInsert, qtdeInsert)
+                VALUES ('{self.usuario}','{self.senha}','{self.email}',{self.icone},'{self.dataNasc}','{self.dataInsert}',0)"""
 
-        #Pega o valor hex do metodo hash
-        hash_password = hash_object.hexdigest()
+            print (sql)
 
-        sql = f"""INSERT INTO usuarios (usuario, senha, email, icone, dataNascimento, dataInsert, qtdeInsert)
-        VALUES ('{self.usuario}','{hash_password}','{self.email}',{self.icone},'{self.dataNasc}','{self.dataInsert}',0)"""
-
-        print (sql)
+            cur.execute(sql)
+            c.comita()
+            c.close()
+        except:
+            return False
 
     def userAddInsertLocal(self):
         try:
@@ -185,9 +181,9 @@ class usuarioModel:
             cur.execute(sql)
             res = cur.fetchall()
 
-            qtdeInsert =  res[0][0]
+            qtdeInsert =  res[0][0] + 1
 
-            sql = f"UPDATE usuarios SET qtdeInsert = {qtdeInsert+1} WHERE idUser = {self.id}"
+            sql = f"UPDATE usuarios SET qtdeInsert = {qtdeInsert} WHERE idUser = {self.id}"
             cur.execute(sql)
             c.con.commit()
             c.close()
@@ -208,7 +204,4 @@ class usuarioModel:
             resposta.append({'id':r[0],'usuario':r[1]})# = {'id':r[0],'usuario':r[1]}
 
         c.close()
-        return resposta
-        #except:
-        #    return False
-        
+        return resposta 

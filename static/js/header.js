@@ -22,9 +22,9 @@ document.write(`<td style="width: 25%; text-align: center;">
             <div class="dropdown">
             <button class="dropbtn btn-menu"><img src="../static/imgs/btnPrincipal_v2.png" alt="" title="Menu"></button>
             <div class="dropdown-content">
-                <a href="/">Atualizar Mapa</a>`);
+                <a href="/index?lat=${lat}&lon=${lon}">Atualizar Mapa</a>`);
 
-                document.write(`<a href="/estacao/${lat};${lon}">Frutas da Estação</a>`)
+                document.write(`<a href="/estacao?lat=${lat}&lon=${lon}">Frutas da Estação</a>`)
                 
                 // document.write(`<a href="#">Mapa por Fruta</a>`)
 

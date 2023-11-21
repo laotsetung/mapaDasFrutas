@@ -3,10 +3,10 @@ TODO
 (done) 1. Refazer as tabelas (frutas, locais, usuarios)
 (done) 1.1 Arrumar os antigos SQL de inserir local, selecionar locais, selecionar frutas
 
-!!! 2. Criar toda a rotina de cadastro de usuarios 
+(DONE) !!! 2. Criar toda a rotina de cadastro de usuarios 
 (done) !!! 2.5 Criar a rotina de LOGIN
 
-!!3. Criar rotinas que retornam mensagens, de erro, de sucesso, ou de avisos. Das ações tomadas. E também as regulam.
+(Começado) !!3. Criar rotinas que retornam mensagens, de erro, de sucesso, ou de avisos. Das ações tomadas. E também as regulam.
     
     
 !!!4. Sobre locais
@@ -20,11 +20,11 @@ TODO
 !!!    4.31 - Confirmar que a fruta existe
 !!!    4.32 - Rejeitar que a fruta existe (caiu, foi podada)
 
-5. Criar rotina de VER FRUTA. para ver as informações
+(DONE) 5. Criar rotina de VER FRUTA. para ver as informações
 
-6. Criar rotina de Estatisticas (começado)
+(DONE) 6. Criar rotina de Estatisticas (começado)
 
-7. Criar rotina Sobre (começado)
+(DONE) 7. Criar rotina Sobre (começado)
 
 8. Adicionar novo icones das frutas q não tem.
  

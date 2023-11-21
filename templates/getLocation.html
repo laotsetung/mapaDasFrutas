@@ -6,24 +6,25 @@
     <title>Mapa Das Frutas - getLocation</title>
 </head>
 <body>
-    <form action="/index" method="POST">
+    <!-- <form action="/index" method="POST">
 
         <input type="hidden" name="lat" id="lat">
         <input type="hidden" name="lon" id="lon">
-    </form>
+    </form> -->
 
     <script>
         function showPosition(position) {
             const lat = position.coords.latitude
             const lon = position.coords.longitude
-            document.getElementById('lat').value = lat
-            document.getElementById('lon').value = lon
+            // document.getElementById('lat').value = lat
+            // document.getElementById('lon').value = lon
 
             localStorage.setItem("lat",position.coords.latitude)
             localStorage.setItem("lon",position.coords.longitude)
 
             //window.location.href = "/index/"+lat+"/"+lon
-            document.forms[0].submit()
+            //document.forms[0].submit()
+            window.location.href = '/index?lat='+lat+'&lon='+lon
         }
 
         if (navigator.geolocation) {

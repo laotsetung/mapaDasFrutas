@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, render_template, request, url_for, flash, 
 from dotenv import load_dotenv, dotenv_values
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from classes.conexao import conexao
+from classes.dataManipulation import dataManipulation
 from classes.frutaModel import frutaModel
 from classes.localModel import localModel
 import datetime
@@ -56,6 +57,7 @@ def main():
     with open("log.txt", "a") as file1:
         file1.write(f"\n{ip} | {datetime.datetime.now()}")
 
+    #Carrega localização
     return render_template('getLocation.html')
 
 @rotas.route("/index", methods=["POST","GET"])
@@ -75,21 +77,19 @@ def mapa():
         print("---RENDERIZANDO index.html :")
         return render_template('index.html', markers=res, lat=lat, lon=lon, usuario=usuario)
     else:
-        #return render_template('getLocation.html')
-        if not request.args.get("lat") and not request.args.get("lon"):
-            return render_template('getLocation.html')
-        else:
-            lat = request.args.get("lat")
-            lon = request.args.get("lon")
-            if (lat != "" and lon != ""):
-                locais = localModel()
-                res = locais.carregaLocais(lat, lon)
-                usuario = carregaUser()
+        lat = request.args.get("lat")
+        lon = request.args.get("lon")
 
-                print(f"---RENDERIZANDO index.html : {usuario}")
-                return render_template('index.html', markers=res, lat=lat, lon=lon, usuario=usuario)
-            else:
-               return render_template('getLocation.html')
+        if (lat != "" and lon != ""):
+            locais = localModel()
+            res = locais.carregaLocais(lat, lon)
+            usuario = carregaUser()
+            print(f"contagem: {len(res)}")
+
+            print("---RENDERIZANDO index.html :")
+            return render_template('index.html', markers=res, lat=lat, lon=lon, usuario=usuario)
+        else:
+            return render_template('getLocation.html')
 
 @rotas.route('/local', methods=['POST','GET'])
 @login_required
@@ -222,7 +222,6 @@ def perfil(id):
     
 @rotas.route("/verUsuarios")
 def verUsuarios():
-    #usuario = usuarioModel()
     usuario = carregaUser()
 
     us = usuarioModel()
@@ -253,38 +252,18 @@ def sobre():
     usuario = carregaUser()
     return render_template('sobre.html', usuario=usuario)
 
-def montaMeses(meses):
-    mesesArray = meses.split('-')
-    mesesArrayInt = []
-    for mes in mesesArray:
-        mesesArrayInt.append(int(mes))
-
-    resultado = []
-    for a in range(1,13):
-        b = int('0'+str(a)) if (a<10) else a
-
-        if b in mesesArrayInt:
-            resultado.append(1)
-        else:
-            resultado.append(0)
-
-    print(resultado)
-    return resultado
-
 @rotas.route("/verFruta/<id>")
 def verFruta(id):
     usuario = carregaUser()
 
     f = frutaModel()
-    fruta = f.getFruta(id)
-    meses = montaMeses(fruta[0][2])
-
+    fruta = f.getFruta(id) #idFruta, nomeFruta, estacao, descricao
+    meses = dataManipulation().montaMeses(fruta[0][2])
+    
     return render_template('verFruta.html', usuario=usuario, nomeFruta=fruta[0][1], idFruta=fruta[0][0], meses=meses, descricao=fruta[0][3])
 
-
-@rotas.route("/estacao/<val>", methods=["GET"])
-def estacao(val):
-    
+@rotas.route("/estacao", methods=["GET"])
+def estacao():
     # print(f"USUARIO ATUAL : {x.get_id()}")
     print(f"---ROTA Frutas da Estacao ; METODO = {request.method}")
     # if request.method == 'POST':
@@ -299,9 +278,11 @@ def estacao(val):
     #     return render_template('index.html', markers=res, lat=lat, lon=lon, usuario=usuario)
     # else:
     #return render_template('getLocation.html')
-    valores = val.split(";")
-    lat = valores[0]
-    lon = valores[1]
+    lat = request.args.get("lat")
+    lon = request.args.get("lon")
+    # valores = val.split(";")
+    # lat = valores[0]
+    # lon = valores[1]
     if lat == "" or lon == "":
         flash("Erro ao recuperar Localização, Recarregando..", "erro")
         return render_template('getLocation.html')

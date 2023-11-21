@@ -31,35 +31,48 @@
 <!-- CODIGO QUE VERIFICA SE O USUARIO ESTA LOGADO E RESGATA AS INFORMACOES-->
 <script>
   {% if usuario %}
-  var userId = {{usuario['id']}}  
-  var usuario = "{{usuario['usuario']}}"
-  var icone = {{usuario['icone']}}
+    var userId = {{usuario['id']}}  
+    var usuario = "{{usuario['usuario']}}"
+    var icone = {{usuario['icone']}}
   {% else %}
-  var userId = undefined
-  var usuario = ""
-  var icone = undefined
+    var userId = undefined
+    var usuario = ""
+    var icone = undefined
   {% endif %}  
 
-  {% if lat %}
-        lat = {{lat}}
-    {% endif %}
+  //PEGAR A POSIÇÃO
+  function showPosition(position) {
+    localStorage.setItem("lat",position.coords.latitude)
+    localStorage.setItem("lon",position.coords.longitude)
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+  }
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+  }
+  
+  // {% if lat %}
+  //     var lat = {{lat}}
+  // {% endif %}
 
-    {% if lon %}
-        lon = {{lon}}
-    {% endif %}
+  // {% if lon %}
+  //     var lon = {{lon}}
+  // {% endif %}
 
-    if (lat == undefined){
-        lat = localStorage.getItem("lat")
-    }
-    if (lon == undefined){
-        lon = localStorage.getItem("lon")
-    }
-    
+  if (lat == undefined){
+      var lat = localStorage.getItem("lat")
+  }
+  if (lon == undefined){
+      var lon = localStorage.getItem("lon")
+  }
+
+
+
 </script>
 
 <body>
-  <input type="hidden" id="lat" name="lat" value="{{lat}}">
-  <input type="hidden" id="lon" name="lon" value ={{lon}}>
+  <!-- <input type="hidden" id="lat" name="lat" value="{{lat}}">
+  <input type="hidden" id="lon" name="lon" value="{{lon}}"> -->
 
   <!-- CABECALHO -->
   <script src="../static/js/header.js"></script>

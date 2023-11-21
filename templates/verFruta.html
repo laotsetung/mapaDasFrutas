@@ -68,14 +68,14 @@
 
 
 <script>
-  var nome = '{{nomeFruta}}'
+  var nome = '{{nomeFruta}}';
+  var desc = `<p style="font-size: 20px; text-align: justify;">{{descricao}}</p>`;
   nomeFruta = removeAcento(nome); //nome.toLowerCase();
   
   document.write(`<img src="../static/imgs/icones/${nomeFruta}.png" alt="">`)
 </script>
-        <p style="font-size: 20px; text-align: justify;">
-          {{descricao}}
-        </p>
+        
+          <div id="descricao"></div>
         <br>
         <h2>Meses de colheita : </h2>
         <table style="width: 100%; text-align: center;">
@@ -121,4 +121,16 @@
   <!-- FIM DO MAIN -->
     
 </body>
+<script>
+  desc = desc.replace(/&lt;br \/&gt;/g, '<br />')
+    .replace(/&lt;b&gt;/g, '<b style="color: #f99">')
+    .replace(/&lt;\/b&gt;/g, '</b>');
+    console.log(desc)
+    desc = desc.replace(/;/g,'<br>');
+
+  document.getElementById('descricao').innerHTML = desc
+
+    
+</script>
+
 </html>
